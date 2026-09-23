@@ -12,30 +12,45 @@ Works with all custom ROMs and Android devices including **Redmi, Poco, Xiaomi, 
 Copy the entire prompt below and send it to **Gemini**, **ChatGPT**, or **Claude** along with your PC `.bat` / `.sh` script:
 
 ```text
-You are an expert Android Shell Script Developer and Fastboot Specialist.
+Act as an expert Fastboot Shell Script Generator. Convert the provided Windows Fastboot script (.bat / .cmd) or Linux script (.sh) into a clean, executable Termux shell script (.sh) following Ritik's Architecture.
 
-My Task: I will provide you with a Windows Batch script (.bat / .cmd) or a Standard Linux Shell Script (.sh) below.
+OUTPUT REQUIREMENTS:
+1. OUTPUT ONLY THE PURE SCRIPT CONTENT:
+   - Do NOT wrap the code in `cat << 'EOF'` or any file-creation commands.
+   - Do NOT output any conversational text before or after the code block.
+   - Output exactly ONE single markdown bash code block that I can copy with one click and paste directly into MT Manager / Text Editor.
 
-Your Objective:
-1. Analyze the script and convert it into a fully functional Termux (Android) compatible Bash/Shell Script (.sh).
-2. Fastboot Binary Handling:
-   - Check if 'termux-fastboot' is available.
-   - If not, fallback to system 'fastboot' or a local binary ('./bin/linux/fastboot').
-3. Remove PC-Specific Commands:
-   - Convert Windows-specific commands like `pause`, `cls`, `echo.`, `%~dp0`, `timeout`, etc., into Linux/Termux equivalents (e.g., `read`, `clear`, `cd "$(dirname "$0")"`).
-4. Safety & Device Verification:
-   - Retain or add a device codename check using `fastboot getvar product`.
-   - If the connected device product name does not match the target device, halt execution immediately (exit 1) with an error message.
-   - Add a data wipe / internal storage formatting warning with a required Y/N prompt confirmation from the user.
-5. Flashing Logic Preservation:
-   - Strictly preserve the original flashing sequence (`fastboot flash ...`, `set_active`, `erase`, `oem`).
-   - Ensure all image file paths match the standard Termux directory layout (e.g., 'images/filename.img').
-6. UI Layout:
-   - Add a clean ASCII Header Banner at the top displaying the Author Name and Tool Name.
+2. RITIK'S ARCHITECTURE & RULES:
+   - Shebang & Directory Lock (Line 1 & 2):
+     #!/data/data/com.termux/files/usr/bin/sh
+     cd "$(dirname "$0")" || exit 1
 
-Here is my PC / Windows script:
+   - Fastboot Binary Auto-Detection:
+     if command -v termux-fastboot >/dev/null 2>&1; then
+         fastboot="termux-fastboot"
+     elif command -v fastboot >/dev/null 2>&1; then
+         fastboot="fastboot"
+     elif [ -f "./bin/linux/fastboot" ]; then
+         fastboot="./bin/linux/fastboot"
+     else
+         fastboot="fastboot"
+     fi
+
+   - ASCII Banner & Metadata:
+     Display ASCII Banner with "MADE BY RITIK" and the target device codename.
+
+   - Device Verification:
+     Check `device=$($fastboot getvar product 2>&1 | grep -F "product:" | tr -s " " | cut -d " " -f 2)`
+     If mismatched with target device, print error and `exit 1`.
+
+   - User Confirmation Prompt:
+     Prompt `printf "Do you agree? (Y/N) "` and `read -r choice`. Exit if not 'y' or 'Y'.
+
+   - Flashing Commands:
+     Convert backslashes (`\`) to forward slashes (`/`).
+     Use `$fastboot flash ...` line-by-line preserving exact partition order.
+
+Convert this script now:
 --------------------------------------------------
-[PASTE YOUR PC .BAT OR .SH CODE HERE]
+[PASTE YOUR .BAT OR .SH SCRIPT HERE]
 --------------------------------------------------
-
-Please generate a clean, error-free, and production-ready Termux Shell Script (.sh) only.
