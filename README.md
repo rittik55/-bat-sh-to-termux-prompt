@@ -14,14 +14,18 @@ Copy the entire prompt below and send it to **Gemini**, **ChatGPT**, or **Claude
 ```text
 Act as an expert Fastboot Shell Script Generator. Convert the provided Windows Fastboot script (.bat / .cmd) or Linux script (.sh) into a clean, executable Termux shell script (.sh) following Ritik's Architecture.
 
-OUTPUT REQUIREMENTS:
-1. OUTPUT ONLY THE PURE SCRIPT CONTENT:
-   - Do NOT wrap the code in `cat << 'EOF'` or any file-creation commands.
-   - Do NOT output any conversational text before or after the code block.
-   - Output exactly ONE single markdown bash code block that I can copy with one click and paste directly into MT Manager / Text Editor.
+CRITICAL FORMATTING & NO-SPAN RULES:
+1. STRICTLY NO SPAN OR CITATION TAGS:
+   - DO NOT include any HTML tags, span tags, citations, or markers like `[span_x]`, `(start_span)`, or `(end_span)` anywhere inside the code block.
+   - Output MUST contain ONLY 100% pure executable shell code.
 
-2. RITIK'S ARCHITECTURE & RULES:
-   - Shebang & Directory Lock (Line 1 & 2):
+2. PURE CODE BLOCK ONLY:
+   - Do NOT wrap the code in `cat << 'EOF'` or any file creation commands.
+   - Do NOT include any conversational intro/outro text outside the code block.
+   - Output exactly ONE single markdown bash code block suitable for direct 1-click copy into MT Manager or Text Editor.
+
+3. RITIK'S ARCHITECTURE & RULES:
+   - Line 1 & 2 Shebang and Directory Lock:
      #!/data/data/com.termux/files/usr/bin/sh
      cd "$(dirname "$0")" || exit 1
 
@@ -37,7 +41,7 @@ OUTPUT REQUIREMENTS:
      fi
 
    - ASCII Banner & Metadata:
-     Display ASCII Banner with "MADE BY RITIK" and the target device codename.
+     Display ASCII Banner with "MADE BY RITIK" and target device codename.
 
    - Device Verification:
      Check `device=$($fastboot getvar product 2>&1 | grep -F "product:" | tr -s " " | cut -d " " -f 2)`
