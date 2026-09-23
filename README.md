@@ -7,7 +7,7 @@ termux-setup-storage
 ```
 ```bash
 curl -fsSL https://raw.githubusercontent.com/rittik55/Rittik-Hybrib-rom-flasher/main/rittikinstall.sh | bash
-
+```
 
 # 📱 PC Fastboot Script (.bat / .sh) to Termux Converter
 
