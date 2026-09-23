@@ -1,6 +1,7 @@
-# -bat-sh-to-termux-prompt
+# Ritik-Hybrib-rom-flasher
 
 Termux Rom file Extracter And Automatic Flashing command
+
 2 - From Termux command line:
 ```bash
 termux-setup-storage
