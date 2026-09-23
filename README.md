@@ -7,7 +7,7 @@ Works with all custom ROMs and Android devices including **Redmi, Poco, Xiaomi, 
 
 ---
 
-## 📋 Master AI Prompt
+## 📋 Master AI PPC Script convert to Termux Script Prompt
 
 Copy the entire prompt below and send it to **Gemini**, **ChatGPT**, or **Claude** along with your PC `.bat` / `.sh` script:
 
