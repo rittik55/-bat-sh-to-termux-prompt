@@ -1,5 +1,14 @@
 # -bat-sh-to-termux-prompt
 
+Termux Rom file Extracter And Automatic Flashing command
+2 - From Termux command line:
+```bash
+termux-setup-storage
+```
+```bash
+curl -fsSL https://raw.githubusercontent.com/rittik55/Rittik-Hybrib-rom-flasher/main/rittikinstall.sh | bash
+
+
 # 📱 PC Fastboot Script (.bat / .sh) to Termux Converter
 
 Convert any PC Fastboot flashing script (`.bat`, `.cmd`, or `.sh`) into a 100% working **Termux-compatible Shell Script** using AI. 
